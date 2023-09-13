@@ -1,0 +1,30 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package grpc.event;
+
+import "shared.proto";
+
+message Event {
+  int64 time = 1;
+  enum EventType {
+    REGISTER = 0;
+    REGISTER_ERROR = 1;
+    UNKNOWN = 1000;
+  }
+  EventType type = 2;
+  grpc.shared.NullableString realmId = 3;
+  grpc.shared.NullableString clientId = 4;
+  grpc.shared.NullableString userId = 5;
+  grpc.shared.NullableString sessionId = 6;
+  grpc.shared.NullableString ipAddress = 7;
+  grpc.shared.NullableString error = 8;
+  map<string, string> details = 9;
+}
+
+message EventRequest {
+  Event event = 1;
+}
+
+service KeycloakEventService {
+  rpc OnEvent(EventRequest) returns (grpc.shared.Empty);
+}

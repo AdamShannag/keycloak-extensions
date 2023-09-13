@@ -1,0 +1,12 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package grpc.shared;
+
+message Empty{}
+
+message NullableString {
+  oneof option {
+    string value = 1;
+    Empty noValue = 2;
+  }
+}
